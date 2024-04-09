@@ -9,6 +9,7 @@ import { Post } from './post.model';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+  isFetching = false;
   loadedPosts:Post[] = [];
 
   constructor(private http: HttpClient) { }
@@ -37,6 +38,7 @@ export class AppComponent implements OnInit {
   }
 
   private fetchData() {
+    this.isFetching = true
     this.http.get<{[key: string]: Post}>('https://http-request-tutorial-udemy-default-rtdb.firebaseio.com/posts.json')
       .pipe(map(
         responseData => {
@@ -51,6 +53,7 @@ export class AppComponent implements OnInit {
       ))
       .subscribe(
         responseData => {
+          this.isFetching = false
           console.log(responseData);
           this.loadedPosts = responseData;
         }
