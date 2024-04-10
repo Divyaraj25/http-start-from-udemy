@@ -12,15 +12,20 @@ import { NgForm } from '@angular/forms';
 export class AppComponent implements OnInit {
   isFetching = false;
   loadedPosts: Post[] = [];
+  error = null;
   @ViewChild('postForm') form:NgForm
 
   constructor(private http: HttpClient, private postService: PostsService) { }
 
   ngOnInit() {
     this.isFetching = true
-    this.postService.fetchPosts().subscribe(posts => {
+    this.postService.fetchPosts().subscribe(
+      posts => {
       this.isFetching = false
       this.loadedPosts = posts
+    }, error => {
+      this.error = error.message
+      console.log(error)
     })
   }
 
@@ -34,9 +39,13 @@ export class AppComponent implements OnInit {
   onFetchPosts() {
     // Send Http request
     this.isFetching = true
-    this.postService.fetchPosts().subscribe(posts => {
+    this.postService.fetchPosts().subscribe(
+      posts => {
       this.isFetching = false
       this.loadedPosts = posts
+    }, error => {
+      this.error = error.message
+      console.log(error)
     })
   }
 
