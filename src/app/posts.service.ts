@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 
 import { Post } from "./post.model";
 import { Injectable } from "@angular/core";
@@ -21,7 +21,14 @@ export class PostsService {
     }
 
     fetchPosts() {
-        return this.http.get<{ [key: string]: Post }>('https://http-request-tutorial-udemy-default-rtdb.firebaseio.com/posts.json')
+        let queryParams = new HttpParams()
+        queryParams = queryParams.append('print', 'pretty')
+        queryParams = queryParams.append('custom', 'key')
+        return this.http.get<{ [key: string]: Post }>('https://http-request-tutorial-udemy-default-rtdb.firebaseio.com/posts.json', {
+            headers: new HttpHeaders({ 'Custom-Header': 'Hello' }),
+            params: queryParams,
+            // params: new HttpParams().set('print', 'pretty')
+        })
             .pipe(map(
                 responseData => {
                     const postArray: Post[] = [];
