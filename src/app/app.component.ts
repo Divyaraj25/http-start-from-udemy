@@ -24,6 +24,7 @@ export class AppComponent implements OnInit {
       this.isFetching = false
       this.loadedPosts = posts
     }, error => {
+      // this.isFetching = false
       this.error = error.message
       console.log(error)
     })
@@ -36,6 +37,11 @@ export class AppComponent implements OnInit {
     this.form.reset()
   }
 
+  onHandleError(){
+    this.error = null
+    this.isFetching = false;
+  }
+
   onFetchPosts() {
     // Send Http request
     this.isFetching = true
@@ -44,6 +50,7 @@ export class AppComponent implements OnInit {
       this.isFetching = false
       this.loadedPosts = posts
     }, error => {
+      // this.isFetching = false
       this.error = error.message
       console.log(error)
     })
