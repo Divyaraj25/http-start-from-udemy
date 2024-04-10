@@ -29,9 +29,12 @@ export class PostsService {
         let queryParams = new HttpParams()
         queryParams = queryParams.append('print', 'pretty')
         queryParams = queryParams.append('custom', 'key')
+
         return this.http.get<{ [key: string]: Post }>('https://http-request-tutorial-udemy-default-rtdb.firebaseio.com/posts.json', {
             headers: new HttpHeaders({ 'Custom-Header': 'Hello' }),
             params: queryParams,
+            // responseType: 'json' // default
+            // responseType:'text'
             // params: new HttpParams().set('print', 'pretty')
         })
             .pipe(map(
